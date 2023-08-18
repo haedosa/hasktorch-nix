@@ -37,9 +37,9 @@
       overlays = __mapAttrs mk-overlay hasktorch-configs;
 
       overlay = self: super:
-        {
+        ({
           hasktorchPkgs = __mapAttrs (_: super.extend) overlays;
-        };
+        } // (mk-overlay "cuda-11" hasktorch-configs.cuda-11 self super));
 
       pkgs = import inputs.nixpkgs { inherit system; overlays = [ overlay ]; };
 
